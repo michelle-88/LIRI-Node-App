@@ -39,15 +39,37 @@ spotify
         console.log(err);
   });
 }
+// Function that will be called when user inputs concert-this command
+function concertThis(input) {
 
-function concertThis() {
+    // Artist/band name that user inputs into CLI will be inserted into URL for Bands in Town API call
+    var queryUrl = "https://rest.bandsintown.com/artists/" + input + "/events?app_id=codingbootcamp";    
 
+    // Use axios get method to make call to Bands in Town API and pull specific data for each concert
+    axios.get(queryUrl).then(
+        (response) => {
+            // Store venue name, location, and concert date
+            // Use moment package to format date from API response into readable format
+            let venueName = response.data[0].venue.name;
+            let venueLoc = response.data[0].venue.city + ", " + response.data[0].venue.region;
+            let date = moment(response.data[0].datetime).format("MM/DD/YYYY");
+
+            // Display concert data in console
+            console.log(`Concert Venue: ${venueName}`);
+            console.log(`Venue Location: ${venueLoc}`);
+            console.log(`Concert Date: ${date}`);
+        })
+        .catch(err => {
+            console.log(err);
+        });
 }
 
+// Function that will be called when user inputs movie-this command
 function movieThis(input) {
-
+    // Movie name that user inputs into CLI will be inserted into URL for OMDB API call
     var queryUrl = "http://www.omdbapi.com/?t=" + input + "&y=&plot=short&apikey=trilogy";
 
+    // Use axios get method to make call to OMDB API and pull specific data for each movie
     axios.get(queryUrl).then(
         (response) => {
             let title = response.data.Title;
@@ -59,6 +81,7 @@ function movieThis(input) {
             let plot = response.data.Plot;
             let actors = response.data.Actors;
             
+            // Display movie info in console
             console.log(`Title: ${title}`);
             console.log(`Release Year: ${year}`);
             console.log(`IMDB Rating: ${imdb}`);
@@ -68,6 +91,9 @@ function movieThis(input) {
             console.log(`Plot: ${plot}`);
             console.log(`Actors: ${actors}`); 
         })
+        .catch(err => {
+            console.log(err);
+        });
 }
 
 function doWhatItSays() {
@@ -84,7 +110,7 @@ switch(command) {
         break;
 
     case "concert-this":
-        concertThis();
+        concertThis(axiosInput);
         break;
 
     case "do-what-it-says":
