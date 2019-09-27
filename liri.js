@@ -30,10 +30,18 @@ spotify
         let link = response.tracks.items[0].external_urls.spotify;
         
         // Display song data in console
+        console.log("");
+        console.log("=====================================");
+        console.log("");
+        console.log(`Displaying song information for ${songInput}...`);        
+        console.log("");
         console.log(`Artist Name: ${artist}`);
         console.log(`Song: ${song}`);
         console.log(`Album: ${album}`);
         console.log(`Link to Spotify: ${link}`);
+        console.log("");
+        console.log("=====================================");
+        console.log("");
   })
   .catch(function(err) {
         console.log(err);
@@ -56,9 +64,17 @@ function concertThis(input) {
             let date = moment(response.data[0].datetime).format("MM/DD/YYYY");
 
             // Display concert data in console
+            console.log("");
+            console.log("=====================================");
+            console.log("");
+            console.log(`Displaying concert information for ${songInput}...`);
+            console.log("");
             console.log(`Concert Venue: ${venueName}`);
             console.log(`Venue Location: ${venueLoc}`);
             console.log(`Concert Date: ${date}`);
+            console.log("");
+            console.log("=====================================");
+            console.log("");
         })
         .catch(err => {
             console.log(err);
@@ -83,14 +99,22 @@ function movieThis(input) {
             let actors = response.data.Actors;
             
             // Display movie info in console
+            console.log("");
+            console.log("=====================================");
+            console.log("");
+            console.log(`Displaying movie information for ${songInput}...`);
+            console.log("");
             console.log(`Title: ${title}`);
             console.log(`Release Year: ${year}`);
             console.log(`IMDB Rating: ${imdb}`);
             console.log(`Rotten Tomatoes Rating: ${rotten}`);
             console.log(`Produced in: ${country}`);
-            console.log(`Language: ${language}`);
+            console.log(`Language(s): ${language}`);
             console.log(`Plot: ${plot}`);
             console.log(`Actors: ${actors}`); 
+            console.log("");
+            console.log("=====================================");
+            console.log("");
         })
         .catch(err => {
             console.log(err);
