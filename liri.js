@@ -19,21 +19,28 @@ var axiosInput = process.argv.slice(3).join("+");
 
 // Function that will be called when user inputs spotify-this-song command
 function spotifyThis(input) {
+
 // Use search method from spotify node module to make a call to spotify API
 spotify
-  .search({ type: 'track', query: input, limit: 1 })
+  .search({ type: 'track', query: input, limit: 5 })
   .then(function(response) {
-        // Grab specific data from the response, i.e. artist(s), song name, spotify link, and album
-        let artist = response.tracks.items[0].artists[0].name;
-        let song = response.tracks.items[0].name;
-        let album = response.tracks.items[0].album.name;
-        let link = response.tracks.items[0].external_urls.spotify;
+    console.log("");
+    console.log("=====================================");
+    console.log("");
+    console.log(`Displaying song information for ${songInput}...`);        
+    console.log("");
+    console.log("=====================================");
+
+    for(var i = 0; i < response.tracks.items.length; i++){
+        // Grab specific data from the Spotify API response
+        let artist = response.tracks.items[i].artists[0].name;
+        let song = response.tracks.items[i].name;
+        let album = response.tracks.items[i].album.name;
+        let link = response.tracks.items[i].external_urls.spotify;
         
         // Display song data in console
         console.log("");
-        console.log("=====================================");
-        console.log("");
-        console.log(`Displaying song information for ${songInput}...`);        
+        console.log(i + 1);        
         console.log("");
         console.log(`Artist Name: ${artist}`);
         console.log(`Song: ${song}`);
@@ -41,7 +48,7 @@ spotify
         console.log(`Link to Spotify: ${link}`);
         console.log("");
         console.log("=====================================");
-        console.log("");
+    }
   })
   .catch(function(err) {
         console.log(err);
