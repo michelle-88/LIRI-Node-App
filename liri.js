@@ -39,6 +39,7 @@ spotify
         console.log(err);
   });
 }
+
 // Function that will be called when user inputs concert-this command
 function concertThis(input) {
 
@@ -96,8 +97,21 @@ function movieThis(input) {
         });
 }
 
+// Function that will be called when user inputs do-what-it-says command
 function doWhatItSays() {
 
+    // Use file system module to read the random.txt file
+    fs.readFile("random.txt", "utf8", (err, data) => {
+        if(err) {
+            throw err;
+        }
+
+        // Take data returned from random.txt file and create a substring that contains only the song name
+        var song = data.substr(19, 18);
+
+        // Run the spotifyThis function with the random.txt song name as the parameter
+        spotifyThis(song);
+    });
 }
 
 switch(command) {
