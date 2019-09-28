@@ -27,7 +27,7 @@ spotify
     console.log("");
     console.log("=====================================");
     console.log("");
-    console.log(`Displaying song information for ${songInput}...`);        
+    console.log(`Displaying song information for ${songInput.toUpperCase()}...`);        
     console.log("");
     console.log("=====================================");
 
@@ -63,18 +63,38 @@ function concertThis(input) {
 
     // Use axios get method to make call to Bands in Town API and pull specific data for each concert
     axios.get(queryUrl).then(
+
+        // If the requested artist/band does not have any upcoming concerts (i.e. there is no info in the response.data array), print the below message in the console
         (response) => {
+            if(response.data[0] == undefined) {
+                console.log("");
+                console.log("=====================================");
+                console.log("");
+                console.log("This artist has no upcoming concerts :(");
+                console.log("");
+                console.log("=====================================");
+                console.log("");
+            }
+
             // Store venue name, location, and concert date
             // Use moment package to format date from API response into readable format
-            let venueName = response.data[0].venue.name;
-            let venueLoc = response.data[0].venue.city + ", " + response.data[0].venue.region;
-            let date = moment(response.data[0].datetime).format("MM/DD/YYYY");
+            var venueName = response.data[0].venue.name;
+            var date = moment(response.data[0].datetime).format("MM/DD/YYYY");
+
+            // Variable to store location of concert that will be logged to console
+            // The default behavior is to display the concert city and state. If no state is listed in response (i.e. the concert is not in US), then city and country will be logged.
+            var venueLoc = response.data[0].venue.city + " " + response.data[0].venue.region;
+            if(response.data[0].venue.region === ""){
+                venueLoc = response.data[0].venue.city + " " + response.data[0].venue.country;
+            }
 
             // Display concert data in console
             console.log("");
             console.log("=====================================");
             console.log("");
-            console.log(`Displaying concert information for ${songInput}...`);
+            console.log(`Displaying concert information for ${songInput.toUpperCase()}...`);
+            console.log("");
+            console.log("=====================================");
             console.log("");
             console.log(`Concert Venue: ${venueName}`);
             console.log(`Venue Location: ${venueLoc}`);
@@ -82,6 +102,7 @@ function concertThis(input) {
             console.log("");
             console.log("=====================================");
             console.log("");
+
         })
         .catch(err => {
             console.log(err);
@@ -109,7 +130,9 @@ function movieThis(input) {
             console.log("");
             console.log("=====================================");
             console.log("");
-            console.log(`Displaying movie information for ${songInput}...`);
+            console.log(`Displaying movie information for ${songInput.toUpperCase()}...`);
+            console.log("");
+            console.log("=====================================");
             console.log("");
             console.log(`Title: ${title}`);
             console.log(`Release Year: ${year}`);
