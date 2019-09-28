@@ -160,11 +160,35 @@ function doWhatItSays() {
             throw err;
         }
 
-        // Take data returned from random.txt file and create a substring that contains only the song name
-        var song = data.substr(19, 18);
+        // Take data read from txt file and split it into an array of 2 values
+        var dataArr = data.split(",");
+        
+        // The first value in the array will be the command
+        command = dataArr[0];
 
-        // Run the spotifyThis function with the random.txt song name as the parameter
-        spotifyThis(song);
+        // The second value in the array will be the song/movie/artist to search for
+        // This second value will be formatted differently based on the command in order to successfully complete the necessary API call
+        if(command === "spotify-this-song") {
+            songInput = dataArr[1];
+        }
+
+        else {
+            axiosInput = dataArr[1];
+        }
+
+        // Take the command and search input from the txt file and use switch to determine what function needs to be called
+        switch(command) {
+            case "spotify-this-song":
+                spotifyThis(songInput);
+                break;
+        
+            case "movie-this":
+                movieThis(axiosInput);
+                break;
+        
+            case "concert-this":
+                concertThis(axiosInput);
+        }
     });
 }
 
