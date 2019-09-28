@@ -76,19 +76,6 @@ function concertThis(input) {
                 console.log("");
             }
 
-            // Store venue name, location, and concert date
-            // Use moment package to format date from API response into readable format
-            var venueName = response.data[0].venue.name;
-            var date = moment(response.data[0].datetime).format("MM/DD/YYYY");
-
-            // Variable to store location of concert that will be logged to console
-            // The default behavior is to display the concert city and state. If no state is listed in response (i.e. the concert is not in US), then city and country will be logged.
-            var venueLoc = response.data[0].venue.city + " " + response.data[0].venue.region;
-            if(response.data[0].venue.region === ""){
-                venueLoc = response.data[0].venue.city + " " + response.data[0].venue.country;
-            }
-
-            // Display concert data in console
             console.log("");
             console.log("=====================================");
             console.log("");
@@ -96,12 +83,32 @@ function concertThis(input) {
             console.log("");
             console.log("=====================================");
             console.log("");
+            
+            for(var i = 0; i < 5; i++) {
+
+            // Store venue name, location, and concert date
+            // Use moment package to format date from API response into readable format
+            var venueName = response.data[i].venue.name;
+            var date = moment(response.data[i].datetime).format("MM/DD/YYYY");
+
+            // Variable to store location of concert that will be logged to console
+            // The default behavior is to display the concert city and state. If no state is listed in response (i.e. the concert is not in US), then city and country will be logged.
+            var venueLoc = response.data[i].venue.city + " " + response.data[i].venue.region;
+            if(response.data[i].venue.region === ""){
+                venueLoc = response.data[i].venue.city + " " + response.data[i].venue.country;
+            }
+
+            // Display concert data in console
+            console.log(i + 1);        
+            console.log("");
             console.log(`Concert Venue: ${venueName}`);
             console.log(`Venue Location: ${venueLoc}`);
             console.log(`Concert Date: ${date}`);
             console.log("");
             console.log("=====================================");
             console.log("");
+
+            }
 
         })
         .catch(err => {
