@@ -20,6 +20,11 @@ var axiosInput = process.argv.slice(3).join("+");
 // Function that will be called when user inputs spotify-this-song command
 function spotifyThis(input) {
 
+    // If user does not input a song after the command, the program will default to show info for The Sign by Ace of Base
+    if(songInput == "") {
+        input = "The Sign Ace of Base";
+    }
+
 // Use search method from spotify node module to make a call to spotify API
 spotify
   .search({ type: 'track', query: input, limit: 5 })
@@ -31,6 +36,7 @@ spotify
     console.log("");
     console.log("=====================================");
 
+    // Loop through the 5 results in the response
     for(var i = 0; i < response.tracks.items.length; i++){
         // Grab specific data from the Spotify API response
         let artist = response.tracks.items[i].artists[0].name;
@@ -66,6 +72,15 @@ function concertThis(input) {
 
         // If the requested artist/band does not have any upcoming concerts (i.e. there is no info in the response.data array), print the below message in the console
         (response) => {
+
+            console.log("");
+            console.log("=====================================");
+            console.log("");
+            console.log(`Displaying concert information for ${songInput.toUpperCase()}...`);
+            console.log("");
+            console.log("=====================================");
+            console.log("");
+
             if(response.data[0] == undefined) {
                 console.log("");
                 console.log("=====================================");
@@ -76,14 +91,6 @@ function concertThis(input) {
                 console.log("");
             }
 
-            console.log("");
-            console.log("=====================================");
-            console.log("");
-            console.log(`Displaying concert information for ${songInput.toUpperCase()}...`);
-            console.log("");
-            console.log("=====================================");
-            console.log("");
-            
             for(var i = 0; i < 5; i++) {
 
             // Store venue name, location, and concert date
@@ -107,9 +114,7 @@ function concertThis(input) {
             console.log("");
             console.log("=====================================");
             console.log("");
-
             }
-
         })
         .catch(err => {
             console.log(err);
@@ -118,6 +123,12 @@ function concertThis(input) {
 
 // Function that will be called when user inputs movie-this command
 function movieThis(input) {
+
+    // If user does not input a movie after the command, the program will default to show info about Mr. Nobody
+    if(axiosInput == "") {
+        input = "mr+nobody";
+    }
+
     // Movie name that user inputs into CLI will be inserted into URL for OMDB API call
     var queryUrl = "http://www.omdbapi.com/?t=" + input + "&y=&plot=short&apikey=trilogy";
 
@@ -199,6 +210,7 @@ function doWhatItSays() {
     });
 }
 
+// This switch will determine which function to call based on the command entered in the terminal
 switch(command) {
     case "spotify-this-song":
         spotifyThis(songInput);
