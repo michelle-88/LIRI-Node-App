@@ -25,3 +25,4 @@ The following languages, Node packages, and APIs were used to build this applica
 
 ### App Demonstration Video
 Click on the following link to view a video of LIRI in action!
+[LIRI Demonstration](https://drive.google.com/file/d/1Ha3tgPfYmkdR4-yqvQrkMLURUMedL_jp/view)
